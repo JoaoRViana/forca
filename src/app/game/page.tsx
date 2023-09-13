@@ -32,7 +32,6 @@ export default function Game(){
     }
 
     const verifyLetter = (e:string) =>{
-        console.log(word,correctLetters)
         const normalizedWord = word.map(letter =>
             letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
           );
