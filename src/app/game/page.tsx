@@ -20,24 +20,29 @@ export default function Game(){
     },[])
 
     const verifyLetter = (e:string) =>{
-        if(word.join('').includes(e)){
-            word.forEach((l,i)=>{
+        console.log(word,correctLetters)
+        const normalizedWord = word.map(letter =>
+            letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          );
+         console.log(normalizedWord)
+         console.log(normalizedWord.join('').includes(e))
+        if(normalizedWord.join('').includes(e)){
+            normalizedWord.forEach((l,i)=>{
                 if(l===e){
                     const letter = document.getElementById(`letter${i}`)
                     const newLetters=  correctLetters
-                    newLetters[i] = e
+                    newLetters[i] = word[i]
                     setCorrectLetters(newLetters)
                     if(letter){
-                        letter.innerHTML = e
+                        letter.innerHTML = word[i]
                     }
                 }
-
             })
             if(word.join('') === correctLetters.join('')){
                 setVictory(true)
             }
         }
-        console.log(word,correctLetters)
+        
     }
     return(
         <div className="bg-slate-400 min-h-screen" onMouseOver={(e)=>{
@@ -49,7 +54,6 @@ export default function Game(){
             <div>
             <input className="text-black" id="forcaInput" maxLength={1} onChange={(e)=>{
                 verifyLetter(e.target.value)
-                console.log(victory)
                 const input = document.getElementById('forcaInput')
                 if(input){
                     input.value =''
