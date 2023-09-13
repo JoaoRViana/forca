@@ -13,7 +13,7 @@ git clone https://github.com/JoaoRViana/forca.git
 Acesse o diretório do projeto:
 
 ```bash
-cd jogo-da-forca-nextjs
+cd forca
 ```
 Instale as dependências:
 
