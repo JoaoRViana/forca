@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Game(){
     const [word,setWord] = useState<Array<string>>([])
-    const [correctLetters] = useState<Array<string>>([])
+    const [correctLetters,setCorrectLetters] = useState<Array<string>>([])
     const [victory,setVictory] = useState<boolean>(false)
     const getAndSetWord = async():Promise<void>=>{
         const string =(await getWord()).split('')
@@ -21,16 +21,23 @@ export default function Game(){
 
     const verifyLetter = (e:string) =>{
         if(word.join('').includes(e)){
-            const index = word.indexOf(e);
-            const letter = document.getElementById(`letter${index}`)
-            correctLetters[index] =  e
-            if(letter){
-                letter.innerHTML = e
-            }
+            word.forEach((l,i)=>{
+                if(l===e){
+                    const letter = document.getElementById(`letter${i}`)
+                    const newLetters=  correctLetters
+                    newLetters[i] = e
+                    setCorrectLetters(newLetters)
+                    if(letter){
+                        letter.innerHTML = e
+                    }
+                }
+
+            })
             if(word.join('') === correctLetters.join('')){
                 setVictory(true)
             }
         }
+        console.log(word,correctLetters)
     }
     return(
         <div className="bg-slate-400 min-h-screen" onMouseOver={(e)=>{
@@ -39,11 +46,6 @@ export default function Game(){
         }}><div>
             {victory?<Link href={'/'}>Home</Link>:''}
         </div>
-            <div>
-                <Link href={'/'}> <button className='text-2xl  bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded'>
-            Home
-          </button></Link>
-            </div>
             <div>
             <input className="text-black" id="forcaInput" maxLength={1} onChange={(e)=>{
                 verifyLetter(e.target.value)
