@@ -7,6 +7,7 @@ import {  useAppSelector } from "../redux/store"
 export default function Game(){
     const [word,setWord] = useState<Array<string>>([])
     const [correctLetters,setCorrectLetters] = useState<Array<string>>([])
+    const [wrongLetters,setWrongLetters] = useState<Array<String>>([])
     const [victory,setVictory] = useState<boolean>(false)
     const [loose,setLoose] = useState<boolean>(false)
     const [attempts,setAttempts] = useState<number>(7)
@@ -54,12 +55,17 @@ export default function Game(){
                 setVictory(true)
             }
         }else{
-            const currentAttempts = attempts-1
-            if(currentAttempts<1){
-                console.log('a')
-                setLoose(true)
+            if(!wrongLetters.join('').includes(e)){
+                const currentWrongs = wrongLetters
+                currentWrongs.push(e)
+                setWrongLetters(currentWrongs)
+                const currentAttempts = attempts-1
+                if(currentAttempts<1){
+                    console.log('a')
+                    setLoose(true)
+                }
+                setAttempts((attempts-1))
             }
-            setAttempts((attempts-1))
         }
 
     }
@@ -106,6 +112,12 @@ export default function Game(){
             <div className={`flex flex-wrap ${theme.textGame} font-bold`}>
                 {word.map((e,i)=>(
                     <h2 key={i} id={`letter${i}`} className="text-2xl mx-2">_</h2>
+                ))}
+            </div>
+            <div className={`flex flex-wrap my2 items-center text-red-600 font-bold text-xl`}>
+                <h2 className="mx-2">Letras Erradas:</h2>
+                {wrongLetters.map((e,i)=>(
+                    <h2 key={`wrong${i}`}>{e}</h2>
                 ))}
             </div>
             <div className={`flex flex-wrap my-2 items-center ${theme.textGame} font-bold`}>
