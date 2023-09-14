@@ -1,6 +1,7 @@
 # Jogo da Forca
 Bem-vindo ao Jogo da Forca em Next.js! Este é um aplicativo simples que permite jogar o clássico jogo da forca usando palavras brasileiras. As palavras são obtidas através da API do Dicionário Aberto (https://api.dicionario-aberto.net/index.html).
 
+<img src='./public/app.gif'>
 
 ## Instalação
 Siga as etapas abaixo para configurar o aplicativo em sua máquina:
