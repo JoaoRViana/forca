@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getWord } from "./helpers";
+import {  useAppSelector } from "../redux/store"
 
 export default function Game(){
     const [word,setWord] = useState<Array<string>>([])
@@ -9,10 +10,11 @@ export default function Game(){
     const [victory,setVictory] = useState<boolean>(false)
     const [loose,setLoose] = useState<boolean>(false)
     const [attempts,setAttempts] = useState<number>(7)
+    const theme = useAppSelector((state)=> state.changeReducer.value)
     const getAndSetWord = async():Promise<void>=>{
         const string =(await getWord()).split('')
         setWord(string)
-        string.forEach((e)=>{
+        string.forEach((_e)=>{
             correctLetters.push('_')
         })
     }
@@ -62,17 +64,17 @@ export default function Game(){
 
     }
     return(
-        <div className=" flex flex-col items-center justify-center self-center h-2/3"  onMouseOver={focusInInput}>
-            <div className="flex flex-wrap text-2xl text-center my-2 text-black font-bold">
+        <div className={`flex flex-col items-center justify-center self-center h-2/3 min-h-screen ${theme.background}  z-1`} onMouseOver={focusInInput}>
+            <div className={`flex flex-wrap text-2xl text-center my-2 ${theme.textGame} font-bold`}>
                 <h2 className="">
                     Tentivas Restantes:
                 </h2>
-                <h2 className="text-red-800 mx-2">{attempts}</h2>
+                <h2 className={`text-${theme.attemptText}-800 mx-2`}>{attempts}</h2>
             </div>
            
             <div>
             {victory?<div>
-                <div className="flex flex-wrap justify-center my-2 text-black font-bold">
+                <div className={`flex flex-wrap justify-center my-2 ${theme.textGame} font-bold`}>
                     <button className="text-2xl  text-black font-bold py-2 px-4 border-b-4 border-yellow-700 hover:border-yellow-500 bg-yellow-500 hover:bg-yellow-400  rounded" onClick={playAgain}>
                         Jogar Novamente
                     </button>
@@ -87,7 +89,7 @@ export default function Game(){
                     </button>
                 </div>
                
-                <div className="text-2xl text-center my-2 text-black font-bold">
+                <div className={`text-2xl text-center my-2 ${theme.textGame} font-bold`}>
                     <h2 className="text-red-600">Você perdeu a palavra era:</h2>
                     <h3 className="text-red-800">{word}</h3>
                 </div>
@@ -101,14 +103,14 @@ export default function Game(){
                 }
             }}></input>
             </div>}
-            <div className="flex flex-wrap text-black font-bold">
+            <div className={`flex flex-wrap ${theme.textGame} font-bold`}>
                 {word.map((e,i)=>(
                     <h2 key={i} id={`letter${i}`} className="text-2xl mx-2">_</h2>
                 ))}
             </div>
-            <div className="flex flex-wrap my-2 items-center text-black font-bold">
+            <div className={`flex flex-wrap my-2 items-center ${theme.textGame} font-bold`}>
             <h2>Voltar o foco para as letras {'->'}</h2>
-            <button className="w-5 h-5 rounded-full bg-cyan-200 mx-2" onClick={focusInInput}></button>
+            <button className={`w-5 h-5 rounded-full ${theme.circle} mx-2`} onClick={focusInInput}></button>
             </div>
         </div>
     )

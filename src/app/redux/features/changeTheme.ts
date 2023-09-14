@@ -3,24 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const lightMode = {
     name:'lightMode',
-    background: 'bg-slate-400',
-    textButton: 'text-white',
-    backgroundButtonHome: 'green',
-    backgroundButtonPlay:'blue',
-    textGame:'black',
+    background: 'bg-slate-200',
+    textButton: 'text-black',
+    textGame:'text-black',
     attemptText:'red',
-    circle:'cyan',
+    circle:'bg-cyan-200',
 }
 
 const darkMode = {
     name:'darkMode',
-    background: 'black',
-    textButton: 'text-black',
-    backgroundButtonHome: 'green',
-    backgroundButtonPlay:'blue',
-    textGame:'white',
+    background: 'bg-gray-800',
+    textButton: 'text-slate-300',
+    textGame:'text-slate-300',
     attemptText:'red',
-    circle:'purple',
+    circle:'bg-purple-200',
 }
 
 
